@@ -1,0 +1,859 @@
+USE [master]
+GO
+/****** Object:  Database [SAAP]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE DATABASE [SAAP]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'SAAP', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\SAAP.mdf' , SIZE = 4288KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'SAAP_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\SAAP_log.ldf' , SIZE = 1072KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [SAAP] SET COMPATIBILITY_LEVEL = 120
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [SAAP].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [SAAP] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [SAAP] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [SAAP] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [SAAP] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [SAAP] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [SAAP] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [SAAP] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [SAAP] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [SAAP] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [SAAP] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [SAAP] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [SAAP] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [SAAP] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [SAAP] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [SAAP] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [SAAP] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [SAAP] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [SAAP] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [SAAP] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [SAAP] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [SAAP] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [SAAP] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [SAAP] SET RECOVERY FULL 
+GO
+ALTER DATABASE [SAAP] SET  MULTI_USER 
+GO
+ALTER DATABASE [SAAP] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [SAAP] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [SAAP] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [SAAP] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [SAAP] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'SAAP', N'ON'
+GO
+USE [SAAP]
+GO
+/****** Object:  User [DESKTOP-L0GLE2A\SENA]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE USER [DESKTOP-L0GLE2A\SENA] FOR LOGIN [DESKTOP-L0GLE2A\SENA] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[__MigrationHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ContextKey] [nvarchar](300) NOT NULL,
+	[Model] [varbinary](max) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC,
+	[ContextKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEndDateUtc] [datetime] NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Clientes]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Clientes](
+	[IdCliente] [int] IDENTITY(1,1) NOT NULL,
+	[TipoDocumento] [varchar](30) NOT NULL,
+	[DocumentoCliente] [int] NOT NULL,
+	[NombreCliente] [varchar](90) NULL,
+	[ApellidosCliente] [varchar](90) NULL,
+	[NumeroTelefonico] [int] NULL,
+	[Email] [varchar](90) NULL,
+	[IdConvenio] [int] NOT NULL,
+	[Convenio] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Convenios]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Convenios](
+	[IdConvenio] [int] IDENTITY(1,1) NOT NULL,
+	[NombreConvenio] [varchar](60) NULL,
+	[Valor] [int] NULL,
+	[IdCliente] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdConvenio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Disponibilidad]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Disponibilidad](
+	[IdLugar] [int] IDENTITY(1,1) NOT NULL,
+	[Fila] [varchar](1) NULL,
+	[Columna] [varchar](1) NULL,
+	[Disponibilidad] [bit] NOT NULL,
+	[IdVehiculo] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdLugar] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Empleados]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Empleados](
+	[IdEmpleado] [int] IDENTITY(1,1) NOT NULL,
+	[TipoDeDocumento] [varchar](20) NULL,
+	[Documento] [int] NULL,
+	[Cargo] [varchar](50) NULL,
+	[Nombres] [varchar](50) NULL,
+	[Apellidos] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdEmpleado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Factura]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Factura](
+	[IdFactura] [int] IDENTITY(1,1) NOT NULL,
+	[IdControlIngreso] [int] NOT NULL,
+	[FechaFactura] [date] NOT NULL,
+	[IdCliente] [int] NOT NULL,
+	[TotalTiempo] [int] NOT NULL,
+	[TotalaPagar] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Ingresos]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Ingresos](
+	[IdControlIngreso] [int] IDENTITY(1,1) NOT NULL,
+	[IdControlTiempo] [int] NOT NULL,
+	[IdVehiculo] [int] NOT NULL,
+	[IdTarifa] [int] NOT NULL,
+	[IdVehiculoCliente] [int] NOT NULL,
+	[IdEmpleado] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdControlIngreso] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Permisos]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Permisos](
+	[IdPermisos] [int] IDENTITY(1,1) NOT NULL,
+	[Creacionusuario] [varchar](50) NULL,
+	[Edicionusuario] [varchar](50) NULL,
+	[Deshabilitarusuario] [varchar](50) NULL,
+	[Eliminacionusuario] [varchar](50) NULL,
+	[IdUsuario] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdPermisos] ASC,
+	[IdUsuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Superusuario]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Superusuario](
+	[IdSuperusuario] [int] IDENTITY(1,1) NOT NULL,
+	[NombreSuperusuario] [varchar](50) NOT NULL,
+	[IdPermisos] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdSuperusuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tablaTipoVehiculo]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tablaTipoVehiculo](
+	[IdVehiculo] [int] IDENTITY(1,1) NOT NULL,
+	[TipoVehiculo] [varchar](90) NULL,
+	[Descripcion] [varchar](150) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdVehiculo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Tarifas]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Tarifas](
+	[IdTarifa] [int] IDENTITY(1,1) NOT NULL,
+	[NombreTarifa] [varchar](90) NULL,
+	[Valor] [int] NULL,
+	[IdVehiculo] [int] NULL,
+	[TieneConvenio] [bit] NULL,
+	[IdConvenio] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdTarifa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Tiempo]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tiempo](
+	[IdControlTiempo] [int] IDENTITY(1,1) NOT NULL,
+	[HoraEntrada] [time](7) NULL,
+	[HoraSalida] [time](7) NULL,
+	[IdIngreso] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdControlTiempo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[TipodeDocumento]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipodeDocumento](
+	[idTipoDocumento] [int] IDENTITY(1,1) NOT NULL,
+	[NombreDocumento] [varchar](60) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idTipoDocumento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Usuarios](
+	[Idusuario] [int] IDENTITY(1,1) NOT NULL,
+	[Usuario] [varchar](50) NOT NULL,
+	[Contraseña] [varchar](50) NOT NULL,
+	[IdEmpleado] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Vehiculos]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Vehiculos](
+	[IdVehiculoCliente] [int] IDENTITY(1,1) NOT NULL,
+	[Placas] [varchar](20) NULL,
+	[Marca] [varchar](30) NULL,
+	[Referencia] [varchar](30) NULL,
+	[Color] [varchar](30) NULL,
+	[Modelo] [varchar](30) NULL,
+	[Descripción] [varchar](100) NULL,
+	[IdCliente] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdVehiculoCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  View [dbo].[Vista_1]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[Vista_1]
+AS
+SELECT        dbo.Clientes.NombreCliente, dbo.Clientes.ApellidosCliente, dbo.Convenios.NombreConvenio AS Convenio, dbo.Convenios.Valor AS Valor_Mensual
+FROM            dbo.Clientes INNER JOIN
+                         dbo.Convenios ON dbo.Clientes.IdConvenio = dbo.Convenios.IdConvenio
+
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [RoleNameIndex]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex] ON [dbo].[AspNetRoles]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserClaims]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserLogins]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_RoleId]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE NONCLUSTERED INDEX [IX_RoleId] ON [dbo].[AspNetUserRoles]
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserRoles]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [UserNameIndex]    Script Date: 19/09/2018 18:55:08 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers]
+(
+	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+GO
+/****** Object:  StoredProcedure [dbo].[Actualizar_Usuario]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[Actualizar_Usuario]
+    @Idusuario varchar(3),
+    @Usuario varchar(20),
+    @Contrasena varchar(20),
+    @IdEmpleado int
+AS 
+BEGIN 
+UPDATE Usuarios
+SET  Usuario = @Usuario,
+     Contraseña = @Contrasena, 
+     IdEmpleado = @IdEmpleado
+WHERE  Idusuario = @Idusuario
+END
+GO
+/****** Object:  StoredProcedure [dbo].[Borrar_usuario]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[Borrar_usuario]
+    @Idusuario int
+AS 
+BEGIN 
+DELETE
+FROM   Usuarios
+WHERE  Idusuario = @Idusuario
+ 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[CRUD]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create PROCEDURE [dbo].[CRUD]
+(  
+@id INTEGER,  
+@Usuario VARCHAR(50),  
+@Contrasena VARCHAR(50),  
+@IdEmpleado VARCHAR(20),  
+@StatementType nvarchar(20) = ''  
+)  
+AS  
+BEGIN  
+IF @StatementType = 'Insert'  
+BEGIN  
+insert into Usuarios(Usuario, Contraseña,IdEmpleado) values( @Usuario,@Contrasena,@IdEmpleado )  
+END  
+IF @StatementType = 'Select'  
+BEGIN  
+select * from Usuarios  
+END  
+IF @StatementType = 'Update'  
+BEGIN  
+UPDATE Usuarios SET  
+Usuario = @Usuario,  Contraseña = @Contrasena, IdEmpleado = @IdEmpleado
+WHERE Idusuario = @id  
+END  
+else IF @StatementType = 'Delete'  
+BEGIN  
+DELETE FROM Usuarios WHERE Idusuario = @id  
+END  
+end  
+GO
+/****** Object:  StoredProcedure [dbo].[cusp_CustomerDelete]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[cusp_CustomerDelete] 
+    @DocumentoCliente int
+AS 
+BEGIN 
+DELETE
+FROM   Clientes
+WHERE  DocumentoCliente = @DocumentoCliente
+END
+
+execute cusp_CustomerDelete 
+@DocumentoCliente = 11
+GO
+/****** Object:  StoredProcedure [dbo].[inserta_ModificarCliente]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[inserta_ModificarCliente] 
+@TipoDocumento varchar(60),
+@DocumentoCliente int,
+@NombreCliente varchar(60),
+@ApellidosCliente varchar(60),
+@NumeroTelefonico int,
+@Email varchar(60),
+@IdConvenio int,
+@Convenio bit
+AS 
+BEGIN 
+ 
+UPDATE Clientes
+SET  
+TipoDocumento = @TipoDocumento,
+DocumentoCliente = @DocumentoCliente,
+NombreCliente=@NombreCliente,
+ApellidosCliente = @ApellidosCliente,
+NumeroTelefonico =@NumeroTelefonico,
+Email = @Email,
+IdConvenio =@IdConvenio,
+Convenio = @Convenio
+WHERE DocumentoCliente = @DocumentoCliente
+END
+GO
+/****** Object:  StoredProcedure [dbo].[insertar_usuarios]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+---se crea el procedimiento almacenado
+create procedure [dbo].[insertar_usuarios]
+---se declaran los parametros que usaremos
+@usuario varchar(50),@contrasena varchar(50),@Id_empleado varchar(50)
+as
+---se hace un insert a la tabla usuarios y se envian los parametros
+insert into Usuarios 
+values(@usuario,@contrasena,@Id_empleado)
+
+GO
+/****** Object:  StoredProcedure [dbo].[mostrar_usuario]    Script Date: 19/09/2018 18:55:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [dbo].[mostrar_usuario]
+  @id int 
+ as
+  select * from Usuarios
+   where Idusuario= @id;
+
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[28] 4[18] 2[12] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = -96
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "Clientes"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 247
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "Convenios"
+            Begin Extent = 
+               Top = 0
+               Left = 428
+               Bottom = 130
+               Right = 637
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 3060
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 4230
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vista_1'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vista_1'
+GO
+USE [master]
+GO
+ALTER DATABASE [SAAP] SET  READ_WRITE 
+GO
